@@ -1,0 +1,37 @@
+https://practice.geeksforgeeks.org/problems/game-with-string4100/1/?category[]=Heap&category[]=Heap&problemStatus=solved&difficulty[]=0&page=1&query=category[]HeapproblemStatussolveddifficulty[]0page1category[]Heap
+
+class Solution{
+public:
+    int minValue(string s, int k){
+        // code here
+        unordered_map<char,int> um;
+        for(int i=0;i<s.size();i++)
+        {
+            um[s[i]]++;
+        }
+         priority_queue <pair<int,int>> pq;
+        for(auto x:um){
+            
+            pq.push({x.second*x.second,x.second});
+        }
+        //cout<<pq.top().second;
+        // pq.pop();
+        // cout<<pq.top().second;
+        for(int i=0;i<k;i++){
+            if(pq.size()>0)
+            {
+                int top=pq.top().second;
+               // cout<<top<<endl;
+                pq.pop();
+                top--;
+                pq.push({top*top,top});
+            }
+        }
+        int sum=0;
+        while(pq.size()>0){
+            sum+=pq.top().first;
+            pq.pop();
+        }
+        return sum;
+    }
+};
