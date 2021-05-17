@@ -1,0 +1,113 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+#define MAX 1000
+
+
+ // } Driver Code Ends
+
+
+/*You are required to complete this method*/
+class Solution{
+  public:
+  
+  int getMaxArea(vector<int> arr, int n){
+    
+    // Your code here
+    
+    //Step 1 : Find the next small left
+    vector<int> nextSmallLeft;
+    findNextSmallLeft(nextSmallLeft,arr,n);
+    
+    //Step 2 : Find the next small right
+    
+     vector<int> nextSmallRight;
+    findNextSmallRight(nextSmallRight,arr,n);
+    //Step 3 : Find the width
+    
+    vector<int> width;
+    for(int i=0;i<n;i++){
+        width.push_back(nextSmallRight[i]-nextSmallLeft[i]-1);
+    }
+    //Step 4 : Find the maximum area
+    int maxArea=0;
+    for(int i=0;i<n;i++){
+        maxArea=max(maxArea,arr[i]*width[i]);
+    }
+    return maxArea;
+}
+void findNextSmallLeft( vector<int> &nextSmallLeft,vector<int> arr,int n){
+    int pseudoLeftIndex=-1;
+    stack<int> s;
+    for(int i=0;i<n;i++){
+        while(s.size()>0 && arr[s.top()]>=arr[i]){
+            s.pop();
+        }
+        if(s.size()==0){
+           nextSmallLeft.push_back(pseudoLeftIndex); 
+        }else{
+          nextSmallLeft.push_back(s.top());  
+        }
+        s.push(i);
+    }
+}
+void findNextSmallRight(vector<int> &nextSmallRight,vector<int> arr ,int n){
+    int pseudoRightIndex=n;
+    stack<int> s;
+    for(int i=n-1;i>=0;i--){
+        while(s.size()>0 and arr[s.top()]>=arr[i]){
+            s.pop();
+        }
+        if(s.size()==0){
+            nextSmallRight.push_back(pseudoRightIndex);
+        }else{
+            nextSmallRight.push_back(s.top());
+        }
+        s.push(i);
+    }
+    reverse(nextSmallRight.begin(),nextSmallRight.end());
+}
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        // Your code here
+        vector<int> v;
+        for(int i=0;i<m;i++){
+            v.push_back(M[0][i]);
+        }
+        int  maxA=getMaxArea(v,m);
+        for(int i=1;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(M[i][j]==0){
+                    v[j]=0;
+                }else{
+                    v[j]+=M[i][j];
+                }
+            }
+            maxA=max(maxA,getMaxArea(v,m));
+        }
+        return maxA;
+        
+    }
+};
+
+
+// { Driver Code Starts.
+int main() {
+    int T;
+    cin >> T;
+
+    int M[MAX][MAX];
+
+    while (T--) {
+        int n, m;
+        cin >> n >> m;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cin >> M[i][j];
+            }
+        }
+        Solution obj;
+        cout << obj.maxArea(M, n, m) << endl;
+    }
+}
+  // } Driver Code Ends
