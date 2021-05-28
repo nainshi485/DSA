@@ -1,0 +1,100 @@
+/*
+Sample Input
+------------
+3
+92 022
+82 12
+77 13
+2 false numeric
+Sample Output
+-------------
+82 12
+77 13
+92 022
+*/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool myNumComp(pair<string,string> p1,pair<string,string> p2){
+    stringstream s1(p1.first);
+    stringstream s2(p2.first);
+    int first=0;
+    int second=0;
+    s1>>first;
+    s2>>second;
+    if(first>second){
+        return true;
+    }else{
+        return false;
+    }
+}
+bool myLexComp(pair<string,string> p1,pair<string,string> p2){
+    return p1.first<p2.first;
+}
+vector<string> sortString(int n,vector<string> &arr,int col_key,int order,bool rev){
+    
+    vector<pair<string,string>> store;
+    for(int i=0;i<n;i++){
+        string key="";
+        
+        stringstream ss(arr[i]);
+       int count=0;
+       while(count<col_key){
+           count++;
+           getline(ss,key,' ');
+       }
+        store.push_back({key,arr[i]});
+        
+    }
+    if(order==0){
+        //Numeric
+        sort(store.begin(),store.end(),myNumComp);
+        
+    }else
+    {
+        //lexicographic
+        sort(store.begin(),store.end(),myLexComp);
+    }
+    // for(auto x: store){
+    //     cout<<x.first<<" "<<x.second<<endl;
+    // }
+    vector<string> output;
+    for(int i=0;i<n;i++){
+        output.push_back(store[i].second);
+    }
+    if(rev==true){
+        reverse(output.begin(),output.end());
+        
+    }
+   // cout<<output.size();
+    return output;
+}
+int main() {
+    
+    int n;
+  cin>>n;
+  cin.ignore();
+ // cout<<n<<endl;
+   vector<string> arr;
+    for(int i=0;i<n;i++){
+        string temp;
+        getline(cin,temp);
+        arr.push_back(temp);
+    }
+  //  cin.ignore();
+
+    int key;
+    cin>>key;
+    int order;
+    cin>>order;
+    bool reverse;
+    cin>>reverse;
+  //  cout<<key<<" "<<order<<" "<<reverse<<endl;
+    vector<string>output=sortString(n,arr,key,order,reverse);
+    for(string s:output){
+        cout<<s<<endl;
+    }
+	return 0;
+}

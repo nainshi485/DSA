@@ -1,0 +1,32 @@
+//Smallest Difference pair of values between two unsorted Arrays
+
+
+#include<vector>
+#include<algorithm>
+#include<climits>
+using namespace std;
+
+
+pair<int,int> minDifference(vector<int> a,vector<int> b){
+    //Complete this method
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    int i=0;
+    int mn=INT_MAX;
+    int j=0;
+    pair<int,int> ans;
+    while(i<a.size() && j<b.size()){
+        if(abs(a[i]-b[j])<mn){
+            mn=abs(a[i]-b[j]);
+            ans.first=a[i];
+            ans.second=b[j];
+        }
+        if(a[i]<b[j]){
+            i++;
+        }else{
+            j++;
+        }
+    }
+    return ans;
+    
+}

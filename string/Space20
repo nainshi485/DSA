@@ -1,0 +1,41 @@
+/*
+Replace all the occurance of space with %20
+*/
+
+
+#include <iostream>
+#include<string>
+using namespace std;
+
+int main() {
+	string s;
+
+	getline(cin,s);
+	int count=0;
+	for(int i=0;i<s.length();i++){
+	    if(isspace(s[i])){
+	        count++;
+	    }
+	}
+	int n=s.length();
+	int addi=3*count-count;
+	count=s.length()+(2*count);
+	string output="";
+
+		s.resize(count);
+			s[count]='\0';
+	for(int i=n-1;i>=0;i--){
+	    if(!isspace(s[i])){
+	        s[i+addi]=s[i];
+	       // cout<<s[i+count]<<endl;
+	    }else{
+	        s[i+addi]='0';
+	        s[i+addi-1]='2';
+	        s[i+addi-2]='%';
+	        addi=addi-2;
+	    }
+	  
+	}
+	cout<<s<<endl;  
+	return 0;
+}

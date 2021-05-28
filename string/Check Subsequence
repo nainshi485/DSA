@@ -1,0 +1,30 @@
+/*check subsequence*/
+
+#include <iostream>
+using namespace std;
+bool checkSubset(string a,string b){
+    bool ans=false;
+    int m=a.size();
+    int n=b.size();
+    int i=0;
+    int j=0;
+    int count=0;
+    while(i<m and j<n){
+        if(a[i]==b[j]){
+            i++;
+            j++;
+            count++;
+        }else{
+            i++;
+        }
+    }
+    return count==n;
+}
+
+int main() {
+	string a;
+	string b;
+	cin>>a>>b;
+	cout<<checkSubset(a,b);
+	return 0;
+}

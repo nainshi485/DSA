@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string minWindow(string s, string p) {
+        int FP[256]={0};
+        int FS[256]={0};
+        for(int i=0;i<p.size();i++){
+            FP[p[i]]++;
+        }
+        int start_idx=-1;
+        int start=0;
+        int window;
+        int min_win=INT_MAX;
+        int cnt=0;
+        for(int i=0;i<s.size();i++){
+            char ch=s[i];
+            FS[ch]++;
+            if(FP[ch]!=0 and FS[ch]<=FP[ch]){
+                cnt++;
+            }
+            if(cnt==p.size()){
+               // cout<<start<<endl;
+                while(FP[s[start]]==0 or FS[s[start]]>FP[s[start]]){
+                    FS[s[start]]--;
+                    start++;
+                  
+                }
+                window=i-start+1;
+                if(window<min_win){
+                    start_idx=start;
+                    min_win=window;
+                   
+                }
+         
+             
+            
+            }
+        }
+        if(start_idx==-1 or start_idx+min_win>s.size()){
+           
+            return "";
+        }
+        //cout<<start_idx<<endl;
+        return s.substr(start_idx,min_win);
+        
+    }

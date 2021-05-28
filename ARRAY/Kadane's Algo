@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int maxSubarraySum(vector<int> arr){
+    //Complete this function, your function should return the maximum subarray sum
+    int n = arr.size();
+    int meh=0;
+    int msf=INT_MIN;
+    for(int i=0;i<n;i++){
+        meh+=arr[i];
+        if(meh<arr[i]){
+            meh=arr[i];
+        }
+        msf=max(meh,msf);
+    }
+    if(msf<0){
+        return 0;
+    }
+    return msf;
+    
+    
+    
+}
